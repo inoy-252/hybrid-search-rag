@@ -1,3 +1,5 @@
+import time
+
 from dotenv import load_dotenv
 from google import genai
 
@@ -7,6 +9,22 @@ class QueryIntelligence:
         load_dotenv()
         self.client = genai.Client()
         self.model_name = model_name
+
+    def _generate_with_retry(self, prompt: str, max_retries: int = 5) -> str:
+        for attempt in range(max_retries):
+            try:
+                response = self.client.models.generate_content(
+                    model=self.model_name,
+                    contents=prompt,
+                )
+                return response.text.strip() if response.text else ""
+            except Exception as e:
+                if "429" in str(e) and attempt < max_retries - 1:
+                    print(" Rate limit reached (429). Pausing 25s before retry...")
+                    time.sleep(25)
+                else:
+                    raise
+        return ""
 
     def rewrite_query(self, query: str) -> str:
         prompt = f"""You are a technical search query rewriting engine for an internal engineering knowledge base.
@@ -20,11 +38,8 @@ Your job:
 User Query: {query}
 Rewritten Technical Search Query:"""
 
-        response = self.client.models.generate_content(
-            model=self.model_name,
-            contents=prompt,
-        )
-        return response.text.strip() if response.text else query
+        text = self._generate_with_retry(prompt)
+        return text if text else query
 
     def generate_hypothetical_document(self, query: str) -> str:
         prompt = f"""You are a senior systems infrastructure engineer writing internal runbooks.
@@ -35,11 +50,8 @@ Return ONLY the raw documentation paragraph. Do NOT add greetings, titles, or ex
 Engineer's Question: {query}
 Hypothetical Documentation Excerpt:"""
 
-        response = self.client.models.generate_content(
-            model=self.model_name,
-            contents=prompt,
-        )
-        return response.text.strip() if response.text else query
+        text = self._generate_with_retry(prompt)
+        return text if text else query
 
 
 if __name__ == "__main__":

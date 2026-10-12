@@ -1,4 +1,5 @@
 import re
+import time
 
 from dotenv import load_dotenv
 from google import genai
@@ -11,7 +12,7 @@ class Reranker:
         self.model_name = model_name
         self.client = genai.Client()
 
-    def score_pair(self, query, document):
+    def score_pair(self, query, document, max_retries=5):
         prompt = f"""You are an expert retrieval judge evaluating document relevance for engineering runbooks.
 Query: {query}
 Document Title: {document.get("title", "")}
@@ -23,11 +24,21 @@ Task: Rate how relevant and actionable this document is for the query on a scale
 - 0.0: Completely irrelevant.
 Respond ONLY with a single number between 0.0 and 10.0. No explanations, no extra words."""
 
-        response = self.client.models.generate_content(
-            model=self.model_name,
-            contents=prompt,
-        )
-        text = response.text.strip() if response.text else "0.0"
+        text = "0.0"
+        for attempt in range(max_retries):
+            try:
+                response = self.client.models.generate_content(
+                    model=self.model_name,
+                    contents=prompt,
+                )
+                text = response.text.strip() if response.text else "0.0"
+                break
+            except Exception as e:
+                if "429" in str(e) and attempt < max_retries - 1:
+                    print(" Reranker hit rate limit (429). Pausing 25s before retry...")
+                    time.sleep(25)
+                else:
+                    raise
         match = re.search(r"\d+(\.\d+)?", text)
         if match:
             return float(match.group(0))
