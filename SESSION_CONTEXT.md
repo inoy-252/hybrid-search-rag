@@ -1,13 +1,13 @@
-# 🚀 Session Context & Continuing Roadmap
+# Session Context & Continuing Roadmap
 
-## 👤 Profile & Background
+## Profile & Background
 * **Developer:** Yasir Lone (Srinagar, J&K, India)
 * **Background:** Self-taught AI/ML Engineer transitioning from 12th Medical (PCB). Highly dedicated, learning from first principles to outshine traditional CS degree holders.
 * **Goal:** Become an elite AI/LLM Systems Engineer. Applied for the LLM Engineer role at AlgoProfessor AI R&D with a project-backed resume and cold pitch.
 
 ---
 
-## 🏗️ What Has Been Built (In Repository: `30-days-of-python-practice`)
+## What Has Been Built (In Repository: `30-days-of-python-practice`)
 1. **Core Python Foundations:** Completed all 30 days (Advanced OOP, SQLite, Concurrency, APIs).
 2. **Autonomous Market Intelligence Pipeline (`projects/market_pipeline/`):** Multi-stage resilient ingestion, NLP keyword extraction, financial metrics, and multi-format persistence.
 3. **Hybrid Search RAG Pipeline from Scratch (`projects/hybrid_search_rag/`):**
@@ -20,7 +20,7 @@
 
 ---
 
-## 🎯 Current Task: Build the Query Intelligence Layer (`query_intelligence.py`)
+## Current Task: Build the Query Intelligence Layer (`query_intelligence.py`)
 
 ### The Problem:
 * **Vocabulary Mismatch & Query Asymmetry:** Casual user queries (e.g. *"how do we stop duplicate charges when someone clicks pay twice"*) fail keyword search because runbooks use domain terminology (e.g. *"idempotency key"*, *"ERR-PAY-409-DUPLICATE"*).
