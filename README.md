@@ -1,4 +1,4 @@
-# 🚀 Production Hybrid Search RAG Pipeline (From Scratch)
+#  Production Hybrid Search RAG Pipeline (From Scratch)
 
 A production-grade, zero-framework **Hybrid Search & Retrieval-Augmented Generation (RAG)** pipeline implemented from first principles in Python.
 
@@ -6,7 +6,7 @@ This system combines sparse lexical retrieval (Okapi BM25), dense semantic retri
 
 ---
 
-## 🏗️ Architecture & Pipeline Flow
+##  Architecture & Pipeline Flow
 
 ```text
                                [ User Query ]
@@ -47,7 +47,7 @@ This system combines sparse lexical retrieval (Okapi BM25), dense semantic retri
 
 ---
 
-## 🧩 Core Hand-Crafted Components
+##  Core Hand-Crafted Components
 
 1. **Query Intelligence (`query_intelligence.py`)**:
    * **Query Rewriting:** Translates informal, conversational user questions into high-density technical keywords and error codes for BM25.
@@ -75,7 +75,7 @@ This system combines sparse lexical retrieval (Okapi BM25), dense semantic retri
 
 ---
 
-## ⚡ Quickstart & Setup
+##  Quickstart & Setup
 
 ### 1. Clone the Repository
 ```bash
@@ -118,7 +118,7 @@ python evaluate.py
 
 ---
 
-## 📊 Benchmark Evaluation Results
+## Benchmark Evaluation Results
 
 To quantitatively measure retrieval quality and eliminate subjective evaluation, this repository includes an automated evaluation suite (`evaluate.py`) running against a golden dataset of challenging conversational, technical, and error-code queries:
 
@@ -130,7 +130,7 @@ To quantitatively measure retrieval quality and eliminate subjective evaluation,
 
 ---
 
-## 📁 Repository Structure
+## Repository Structure
 
 ```text
 ├── bm25.py                # Okapi BM25 implementation from scratch
@@ -147,5 +147,5 @@ To quantitatively measure retrieval quality and eliminate subjective evaluation,
 
 ---
 
-## 📜 License
+##  License
 MIT License. Free to use and build upon.
